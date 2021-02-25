@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.9k 字
+      7.2k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      87
+      91
        分钟
     </span>
   
@@ -377,6 +377,7 @@
 
 
 <h3 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h3><p><code>$GOROOT/pkg/$GOOS_$GOARCH/</code></p>
+<h4 id="所占字节数"><a href="#所占字节数" class="headerlink" title="所占字节数"></a>所占字节数</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> ArbitraryType <span class="hljs-keyword">int</span><br><br>safe.Sizeof(x ArbitraryType) <span class="hljs-keyword">uintptr</span><br></code></pre></td></tr></table></figure>
 <h4 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h4><p><code>math/rand</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">rand.Seed(seed <span class="hljs-keyword">int64</span>)	<span class="hljs-comment">//随机种子，默认 纳秒级时间戳</span><br>rand.Intn(n <span class="hljs-keyword">int</span>)			<span class="hljs-comment">// [0, n)之间的整数</span><br>rand.Float32/<span class="hljs-number">64</span>()			<span class="hljs-comment">// [0.0, 1.0)之间的浮点数</span><br></code></pre></td></tr></table></figure>
 <h4 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h4><p><code>unicode</code> <code>unicode/utf8</code>字符的相关操作</p>
@@ -729,6 +730,7 @@
 <li><code>id := [len]type&#123;v1, ...&#125;</code></li>
 <li><code>id := [...]type&#123;v1, ...&#125;</code></li>
 <li><code>id := [len]type&#123;ix1: v1, ...&#125;</code></li>
+<li><code>id := new([len]type)</code></li>
 </ol>
 <h4 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>长度必须是常量表达式，且为非负整数</p>
@@ -748,6 +750,8 @@
 <li><p>声明后元素会赋为类型的零值</p>
 </li>
 <li><p>数组是<strong>值类型</strong></p>
+</li>
+<li><p>相同类型的数组支持相等性比较 <code>==</code> <code>!=</code></p>
 </li>
 </ol>
 <h4 id="内存结构"><a href="#内存结构" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/img/array_in_memory.png" srcset="/img/loading.gif" alt="数组内存结构"></p>
@@ -785,6 +789,12 @@
 <p>S for Slice，仍然引用相关数组</p>
 </blockquote>
 </li>
+<li><p><code>id := make([]type, len[, cap])</code>创建一个切片和相关数组</p>
+<blockquote>
+<p>cap省略时，len(s) == cap(s) == len</p>
+</blockquote>
+<p>  <img src="/img/makeslice.png" srcset="/img/loading.gif" alt="make切片的内存结构"></p>
+</li>
 </ul>
 <h4 id="注意点-1"><a href="#注意点-1" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>可索引且长度可变</p>
@@ -797,6 +807,11 @@
 <p>不用要指针指向切片</p>
 </blockquote>
 </li>
+<li><p>切片不能直接比较</p>
+<blockquote>
+<p> 不能使用<code>==</code> <code>!=</code>操作符来判断两个切片是否含有全部相等元素</p>
+</blockquote>
+</li>
 </ol>
 <h4 id="内存结构-1"><a href="#内存结构-1" class="headerlink" title="内存结构"></a>内存结构</h4><p>三个域的结构体：指向相关数组的指针，切片长度，切片容量</p>
 <p>下图给出了一个长度为 2，容量为 4 的切片y：</p>
@@ -806,15 +821,11 @@
 </ul>
 <p><img src="/img/slice_in_memory.png" srcset="/img/loading.gif" alt="切片的内存结构"></p>
 <h4 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h4><ol>
+<li><p>通过<code>[索引]</code>读取、修改元素的值</p>
+</li>
 <li><p>长度 <code>len(S)</code>元素个数</p>
 </li>
 <li><p>容量 <code>cap(S)</code>切片第一元素到相关数组末尾的长度</p>
-</li>
-<li><p>初始化 <code>make([]type, len[, cap])</code>创建一个切片和相关数组</p>
-<blockquote>
-<p>cap省略时，len(s) == cap(s) == len</p>
-</blockquote>
-<p> <img src="/img/makeslice.png" srcset="/img/loading.gif" alt="make切片的内存结构"></p>
 </li>
 <li><p>迭代 <code>for ix, value := range S &#123;&#125;</code></p>
 </li>
@@ -831,7 +842,63 @@
 </li>
 </ol>
 <h4 id="多维切片"><a href="#多维切片" class="headerlink" title="多维切片"></a>多维切片</h4><p><code>[][]...type</code></p>
-<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="make和new"><a href="#make和new" class="headerlink" title="make和new"></a>make和new</h3><blockquote>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>一种元素对（pair）的无序集合</p>
+<blockquote>
+<p>快速寻找值的理想结构</p>
+</blockquote>
+<h4 id="声明和初始化-2"><a href="#声明和初始化-2" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><p>声明：<code>var id map[keytype]valuetype</code></p>
+<p>初始化：</p>
+<ul>
+<li><code>id := map[keytype]valuetype&#123;key: value, ...&#125; </code></li>
+<li><code>id := make(map[keytype]valuetype, capacity)</code></li>
+</ul>
+<h4 id="注意点-2"><a href="#注意点-2" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<li><p>长度动态增长</p>
+</li>
+<li><p>引用类型</p>
+</li>
+<li><p>不支持直接比较</p>
+</li>
+<li><p>key只能是支持<code>==</code> <code>!=</code>的类型</p>
+<blockquote>
+<p><code>int</code> <code>float</code> <code>string</code> … <code>pointer</code> <code>interface</code> <code>array</code> <code>channel</code></p>
+<p><code>slice</code> , <code>map</code>, 包含不可比较的<code>struct</code> , <code>function</code>不能作为key</p>
+<p>如果要用结构体作为key，可以提供<code>Key()</code> 和<code>Hash()</code>方法</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="操作-3"><a href="#操作-3" class="headerlink" title="操作"></a>操作</h4><ol>
+<li><p><code>M[key]</code>用来读取值</p>
+<blockquote>
+<p>key不存在，会返回valuetype的零值</p>
+</blockquote>
+</li>
+<li><p><code>M[key] = value</code>用来修改值和添加键值对</p>
+</li>
+<li><p><code>len(M)</code>元素对个数</p>
+</li>
+<li><p>检测键值对是否存在<code>value, ok := M[key]</code></p>
+</li>
+<li><p>删除键值对<code>delete(M, key)</code></p>
+<blockquote>
+<p>key不存在不会引发错误</p>
+</blockquote>
+</li>
+<li><p>迭代<code>for key, value := range M &#123;&#125;</code></p>
+</li>
+<li><p>排序<code>将key存入切片，再排序切片</code></p>
+<blockquote>
+<p>元素对的有序集合，用结构体切片更好</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="Map的切片"><a href="#Map的切片" class="headerlink" title="Map的切片"></a>Map的切片</h4><p><code>[]map[keytype][valuetype]</code></p>
+<blockquote>
+<p>双<code>make</code></p>
+<p>第一个为切片分配内存</p>
+<p>第二个为切片中的每个<code>map</code>分配内存</p>
+</blockquote>
+<h3 id="make和new"><a href="#make和new" class="headerlink" title="make和new"></a>make和new</h3><blockquote>
 <p><strong>口诀</strong>：<code>new</code>分配内存，<code>make</code>初始化</p>
 </blockquote>
 <p><code>make</code>用于内建类型（<code>map</code>、<code>slice</code> 和<code>channel</code>）的内存分配</p>
