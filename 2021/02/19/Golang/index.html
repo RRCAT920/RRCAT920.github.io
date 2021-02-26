@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.2k 字
+      8k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      91
+      101
        分钟
     </span>
   
@@ -394,9 +394,14 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// bytes.Buffer的声明和初始化</span><br><span class="hljs-keyword">var</span> buffer bytes.Buffer<br>buffer := &amp;bytes.Buffer&#123;&#125;<br>bytes.NewBuffer([]<span class="hljs-keyword">byte</span>) *Buffer<br>bytes.NewBufferString(<span class="hljs-keyword">string</span>) *Buffer<br><br><span class="hljs-comment">// 扩容公式 2*cap + dataLength</span><br><br><span class="hljs-comment">// 追加字符串(这种实现方式比使用 += 要更节省内存和 CPU，尤其是要串联的字符串数目特别多的时候)</span><br>Buffer#WriteString(<span class="hljs-keyword">string</span>) (<span class="hljs-keyword">int</span>, error)<br><br><span class="hljs-comment">// 转成字符串</span><br>Buffer#String() <span class="hljs-keyword">string</span><br></code></pre></td></tr></table></figure>
 <h4 id="切片和数组的排序和搜索"><a href="#切片和数组的排序和搜索" class="headerlink" title="切片和数组的排序和搜索"></a>切片和数组的排序和搜索</h4><p><code>sort</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">sort.Ints(a []<span class="hljs-keyword">int</span>)<br>sort.IntsAreSorted(a []<span class="hljs-keyword">int</span>) <span class="hljs-keyword">bool</span><br>sort.SearchInts([]<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>) (index <span class="hljs-keyword">int</span>)  <span class="hljs-comment">// 采用的二分搜索，搜索前必须排序</span><br><span class="hljs-comment">// Float6s</span><br><span class="hljs-comment">// Strings</span><br></code></pre></td></tr></table></figure>
+<h4 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h4><p><code>regexp</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">regexp.Compile(expr <span class="hljs-keyword">string</span>) (*Regexp, error)<br><br>regexp.Match(pattern <span class="hljs-keyword">string</span>, b []<span class="hljs-keyword">byte</span>) (matched <span class="hljs-keyword">bool</span>, err error)<br>(MatchReader/MatchString)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(re *Regexp)</span> <span class="hljs-title">ReplaceAllString</span><span class="hljs-params">(src, repl <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">string</span></span><br></code></pre></td></tr></table></figure>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span> <span class="hljs-title">Lock</span>/<span class="hljs-title">Unlock</span><span class="hljs-params">()</span></span><br><span class="hljs-comment">// RWMutex</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(o *Once)</span> <span class="hljs-title">Do</span><span class="hljs-params">(f <span class="hljs-keyword">func</span>()</span>)	 // 确保函数只被调用一次</span><br><br><span class="hljs-comment">// 实现对象锁</span><br><span class="hljs-keyword">type</span> Info <span class="hljs-keyword">struct</span> &#123;<br>  mu sync.Mutex<br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="精密计算"><a href="#精密计算" class="headerlink" title="精密计算"></a>精密计算</h4><p><code>math/big</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewInt</span><span class="hljs-params">(x <span class="hljs-keyword">int64</span>)</span> *<span class="hljs-title">Int</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(z *Int)</span> <span class="hljs-title">Add</span><span class="hljs-params">(x, y *Int)</span> *<span class="hljs-title">Int</span></span><br></code></pre></td></tr></table></figure>
 
 
-<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>定义 <code>const identifier [type] = value</code></p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>定义 <code>const identifier [type] = value</code></p>
 <h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
 <li><p>只能存储布尔型、数字型、字符串的数据</p>
 </li>
@@ -755,7 +760,7 @@
 </li>
 </ol>
 <h4 id="内存结构"><a href="#内存结构" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/img/array_in_memory.png" srcset="/img/loading.gif" alt="数组内存结构"></p>
-<h4 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h4><ol>
+<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><ol>
 <li>通过<code>[索引]</code>读取、修改元素的值</li>
 <li>迭代<ul>
 <li><code>for i := 0; i &lt; len(A); &#123;&#125;</code></li>
@@ -820,7 +825,7 @@
 <li>切片 <code>y[0:4]</code> 由 元素 3，5，7 和 11 组成。</li>
 </ul>
 <p><img src="/img/slice_in_memory.png" srcset="/img/loading.gif" alt="切片的内存结构"></p>
-<h4 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h4><ol>
+<h4 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h4><ol>
 <li><p>通过<code>[索引]</code>读取、修改元素的值</p>
 </li>
 <li><p>长度 <code>len(S)</code>元素个数</p>
@@ -866,8 +871,10 @@
 <p>如果要用结构体作为key，可以提供<code>Key()</code> 和<code>Hash()</code>方法</p>
 </blockquote>
 </li>
+<li><p>线程不安全</p>
+</li>
 </ol>
-<h4 id="操作-3"><a href="#操作-3" class="headerlink" title="操作"></a>操作</h4><ol>
+<h4 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h4><ol>
 <li><p><code>M[key]</code>用来读取值</p>
 <blockquote>
 <p>key不存在，会返回valuetype的零值</p>
@@ -932,7 +939,98 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> digitRegexp = regexp.MustCompile(<span class="hljs-string">`\d+`</span>)<br><br><span class="hljs-comment">// 返回的字节切片引用了整个文件（即占用了整个文件的内存）</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">FindDigits</span><span class="hljs-params">(filename <span class="hljs-keyword">string</span>)</span> []<span class="hljs-title">byte</span></span> &#123;<br>	file, _ := ioutil.ReadFile(filename)<br>	<span class="hljs-keyword">return</span> digitRegexp.Find(file)<br>&#125;<br><br><span class="hljs-comment">// 仅占用有效数字的内存</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LowFindDigits</span><span class="hljs-params">(filename <span class="hljs-keyword">string</span>)</span> []<span class="hljs-title">byte</span></span> &#123;<br>	file, _ := ioutil.ReadFile(filename)<br>	digits := digitRegexp.Find(file)<br>	cache := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">byte</span>, <span class="hljs-built_in">len</span>(digits))<br>	<span class="hljs-built_in">copy</span>(cache, digits)<br>	<span class="hljs-keyword">return</span> cache<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="结构与方法"><a href="#结构与方法" class="headerlink" title="结构与方法"></a>结构与方法</h2><h2 id="接口与反射"><a href="#接口与反射" class="headerlink" title="接口与反射"></a>接口与反射</h2><h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
+<h2 id="结构与方法"><a href="#结构与方法" class="headerlink" title="结构与方法"></a>结构与方法</h2><h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><h4 id="定义、声明、初始化"><a href="#定义、声明、初始化" class="headerlink" title="定义、声明、初始化"></a>定义、声明、初始化</h4><p>定义:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> T <span class="hljs-keyword">struct</span> &#123;<br>  field fieldtype [tag] <span class="hljs-comment">// tag是字符串</span><br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>声明：<code>var id T</code></p>
+<p>初始化：</p>
+<ul>
+<li><code>id := T&#123;value, ...&#125;</code></li>
+<li><code>id := T&#123;field: value, ...&#125;</code></li>
+<li><code>id := new(T)</code>等价于<code>id := &amp;T&#123;&#125;</code></li>
+</ul>
+<p><img src="/img/newStruct.jpg" srcset="/img/loading.gif" alt="new初始化"></p>
+<p><img src="/img/structLiteral.jpg" srcset="/img/loading.gif" alt="字面量初始化"></p>
+<h4 id="注意点-3"><a href="#注意点-3" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<li><p>结构体是值类型</p>
+</li>
+<li><p><strong>基于字段</strong>判断是否能进行相等性比较</p>
+</li>
+<li><p>每一个类型只能有一个匿名字段，匿名字段名即类型名</p>
+</li>
+<li><p>匿名字段可能导致命名冲突</p>
+<blockquote>
+<ol>
+<li>外层名字会覆盖内层名字，但内存空间保留</li>
+<li>相同名字在同一级别出现两次，如果该名字被使用，则会引发错误（不使用该名字，不会引发错误）</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="内存结构-2"><a href="#内存结构-2" class="headerlink" title="内存结构"></a>内存结构</h4><p>结构体和它的字段在内存中连续分配</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Rect1 <span class="hljs-keyword">struct</span> &#123;Min, Max Point &#125;<br><span class="hljs-keyword">type</span> Rect2 <span class="hljs-keyword">struct</span> &#123;Min, Max *Point &#125;<br></code></pre></td></tr></table></figure>
+<p><img src="/img/struct_in_memory.jpg" srcset="/img/loading.gif" alt="结构体和其字段的内存分布"></p>
+<h4 id="操作-3"><a href="#操作-3" class="headerlink" title="操作"></a>操作</h4><ol>
+<li>选择器<code>.</code><ul>
+<li>访问自身字段和匿名字段的字段，对结构体指针自动反引用</li>
+<li>调用自身方法和匿名字段的方法，对指针接受者自动重定向</li>
+</ul>
+</li>
+<li><code>reflect</code>包获得标签<code>tag</code></li>
+</ol>
+<h4 id="递归结构体"><a href="#递归结构体" class="headerlink" title="递归结构体"></a>递归结构体</h4><p>结构体的字段的类型可以是自己</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 双链表</span><br><span class="hljs-keyword">type</span> Node <span class="hljs-keyword">struct</span> &#123;<br>  prev *Node<br>  data <span class="hljs-keyword">float64</span><br>  next *Node<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>带 <strong>接收者</strong> 的函数</p>
+<blockquote>
+<p>类型 T（或 *T）上的所有方法的集合叫做类型 T（或 *T）的方法集（method set）</p>
+</blockquote>
+<h4 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h4><p><code>func (recv T) methodName(paramterList) returnValueList &#123;&#125;</code></p>
+<h4 id="注意点-4"><a href="#注意点-4" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<li><p>类型和其方法必须在同一个包里定义</p>
+</li>
+<li><p>接受者类型不能是内建类型和接口，但可以是内建类型的别名类型</p>
+</li>
+<li><p>不允许方法重载</p>
+<blockquote>
+<p>一个类型<code>T&amp;*T</code>只能由一个给定名称的方法</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="操作-4"><a href="#操作-4" class="headerlink" title="操作"></a>操作</h4><p>选择器<code>.</code>调用方法，且对指针接受者自动重定向</p>
+<h4 id="接受者与接口"><a href="#接受者与接口" class="headerlink" title="接受者与接口"></a>接受者与接口</h4><p><strong>调用</strong></p>
+<p>值接受者方法，可以通过值调用，也可以通过指针调用</p>
+<p>指针接受者方法，只能通过指针和可取地址的值调用</p>
+<blockquote>
+<p>补充: （值方法集：值接受者方法集，指针方法集：指针接受者方法集）</p>
+<ul>
+<li>一个类型可以有值方法集和指针方法集<ul>
+<li>值方法集是指针方法集的真子集</li>
+</ul>
+</li>
+<li>规则<ul>
+<li>值对象只能使用值方法集</li>
+<li>指针对象能使用 值方法集 + 指针方法集</li>
+</ul>
+</li>
+<li>接口的匹配(或者叫实现)<ul>
+<li>类型实现了接口的所有方法,叫匹配</li>
+<li>具体的讲,要么类型的值方法集匹配接口,要么指针方法集匹配接口</li>
+</ul>
+</li>
+</ul>
+<p>具体的匹配分两种:</p>
+<ul>
+<li>值方法集和接口匹配<ul>
+<li>给接口变量赋值的可以是值对象和指针对象,因为都包含值方法集</li>
+</ul>
+</li>
+<li>指针方法集和接口匹配<ul>
+<li>只能将指针对象赋值给接口变量,因为只有指针方法集和接口匹配</li>
+<li>如果将值对象赋值给接口变量,会引发编译错误(会触发接口合理性检查机制)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="接口与反射"><a href="#接口与反射" class="headerlink" title="接口与反射"></a>接口与反射</h2><h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
 <blockquote>
 <p><code>F</code>调用<code>panic</code>，<code>F</code>中断执行，但<code>defer</code>函数正常执行，然后返回调用<code>F</code>的地方，接着<code>panic</code>会向上传递，直到发送<code>panic</code>的<code>goroutine</code>中所有调用的函数返回，此时程序退出。</p>
 </blockquote>
@@ -945,7 +1043,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		<span class="hljs-keyword">if</span> x := <span class="hljs-built_in">recover</span>(); x != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-comment">// recover and process</span><br>		&#125;<br>	&#125;()<br><br>	<span class="hljs-comment">// normal process</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="协程与通道"><a href="#协程与通道" class="headerlink" title="协程与通道"></a>协程与通道</h2><h2 id="网络、模版与网页应用"><a href="#网络、模版与网页应用" class="headerlink" title="网络、模版与网页应用"></a>网络、模版与网页应用</h2><h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="常见陷阱与错误"><a href="#常见陷阱与错误" class="headerlink" title="常见陷阱与错误"></a>常见陷阱与错误</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h2 id="出于性能考虑的代码段"><a href="#出于性能考虑的代码段" class="headerlink" title="出于性能考虑的代码段"></a>出于性能考虑的代码段</h2><h2 id="构建一个完整应用"><a href="#构建一个完整应用" class="headerlink" title="构建一个完整应用"></a>构建一个完整应用</h2><h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>定义：带 <strong>接收者</strong> 的函数</p>
+<h2 id="协程与通道"><a href="#协程与通道" class="headerlink" title="协程与通道"></a>协程与通道</h2><h2 id="网络、模版与网页应用"><a href="#网络、模版与网页应用" class="headerlink" title="网络、模版与网页应用"></a>网络、模版与网页应用</h2><h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="常见陷阱与错误"><a href="#常见陷阱与错误" class="headerlink" title="常见陷阱与错误"></a>常见陷阱与错误</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h2 id="出于性能考虑的代码段"><a href="#出于性能考虑的代码段" class="headerlink" title="出于性能考虑的代码段"></a>出于性能考虑的代码段</h2><h2 id="构建一个完整应用"><a href="#构建一个完整应用" class="headerlink" title="构建一个完整应用"></a>构建一个完整应用</h2><h1 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h1><p>定义：</p>
 <ol>
 <li><p>接收者的类型定义和方法声明必须在同一包内</p>
 </li>
