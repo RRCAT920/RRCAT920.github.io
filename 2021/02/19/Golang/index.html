@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      8k 字
+      7.9k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      101
+      99
        分钟
     </span>
   
@@ -996,7 +996,45 @@
 </li>
 </ol>
 <h4 id="操作-4"><a href="#操作-4" class="headerlink" title="操作"></a>操作</h4><p>选择器<code>.</code>调用方法，且对指针接受者自动重定向</p>
-<h4 id="接受者与接口"><a href="#接受者与接口" class="headerlink" title="接受者与接口"></a>接受者与接口</h4><p><strong>调用</strong></p>
+<h2 id="接口与反射"><a href="#接口与反射" class="headerlink" title="接口与反射"></a>接口与反射</h2><h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><blockquote>
+<p>接口定义一组方法，这一组方法叫方法集</p>
+</blockquote>
+<h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Id <span class="hljs-keyword">interface</span> &#123;<br>  M1(P) R<br>  M2(P) R<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="注意点-5"><a href="#注意点-5" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<li><p>接口不能包含变量</p>
+</li>
+<li><p>指向接口值的指针非法</p>
+<blockquote>
+<p>接口值又叫接口类型的变量</p>
+</blockquote>
+</li>
+<li><p>实现类型的变量可赋值给接口值</p>
+</li>
+<li><p>嵌套接口可能出现命名冲突</p>
+</li>
+<li><p>实现类型的切片不能复制给接口切片</p>
+<blockquote>
+<p>因为内存结构不一样</p>
+<ol>
+<li>接口切片中的接口是双字</li>
+<li>实现切片中的实现类型是Sizeof(Impl)</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="内存结构-3"><a href="#内存结构-3" class="headerlink" title="内存结构"></a>内存结构</h4><p><code>var ai Id</code>中的<code>ai</code>是一个双字数据结构</p>
+<p><img src="/img/interface_value_in_memory.jpg" srcset="/img/loading.gif" alt="接口值的内存结构"></p>
+<h4 id="操作-5"><a href="#操作-5" class="headerlink" title="操作"></a>操作</h4><ol>
+<li><p>类型断言 <code>recv, ok := varI.(T)</code></p>
+<blockquote>
+<p><code>varI</code>必须是接口值否则<code>invalid type assertion: varI.(T) (non-interface type (type of varI) on left)</code></p>
+</blockquote>
+</li>
+<li><p>类型判断 <code>type-switch</code></p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">switch</span> recv := i.(<span class="hljs-keyword">type</span>) &#123;<br><span class="hljs-keyword">case</span> T:<br>    <span class="hljs-comment">// v 的类型为 T</span><br><span class="hljs-keyword">case</span> S:<br>    <span class="hljs-comment">// v 的类型为 S</span><br><span class="hljs-keyword">default</span>:<br>    <span class="hljs-comment">// 没有匹配，recv 与 i 的类型相同</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="接受者与接口"><a href="#接受者与接口" class="headerlink" title="接受者与接口"></a>接受者与接口</h4></li>
+</ol>
+<p><strong>调用</strong></p>
 <p>值接受者方法，可以通过值调用，也可以通过指针调用</p>
 <p>指针接受者方法，只能通过指针和可取地址的值调用</p>
 <blockquote>
@@ -1030,7 +1068,8 @@
 </li>
 </ul>
 </blockquote>
-<h2 id="接口与反射"><a href="#接口与反射" class="headerlink" title="接口与反射"></a>接口与反射</h2><h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
+<h4 id="空接口"><a href="#空接口" class="headerlink" title="空接口"></a>空接口</h4><p><code>任何类型都实现了空接口interface &#123;&#125;</code></p>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
 <blockquote>
 <p><code>F</code>调用<code>panic</code>，<code>F</code>中断执行，但<code>defer</code>函数正常执行，然后返回调用<code>F</code>的地方，接着<code>panic</code>会向上传递，直到发送<code>panic</code>的<code>goroutine</code>中所有调用的函数返回，此时程序退出。</p>
 </blockquote>
@@ -1043,49 +1082,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		<span class="hljs-keyword">if</span> x := <span class="hljs-built_in">recover</span>(); x != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-comment">// recover and process</span><br>		&#125;<br>	&#125;()<br><br>	<span class="hljs-comment">// normal process</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="协程与通道"><a href="#协程与通道" class="headerlink" title="协程与通道"></a>协程与通道</h2><h2 id="网络、模版与网页应用"><a href="#网络、模版与网页应用" class="headerlink" title="网络、模版与网页应用"></a>网络、模版与网页应用</h2><h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="常见陷阱与错误"><a href="#常见陷阱与错误" class="headerlink" title="常见陷阱与错误"></a>常见陷阱与错误</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h2 id="出于性能考虑的代码段"><a href="#出于性能考虑的代码段" class="headerlink" title="出于性能考虑的代码段"></a>出于性能考虑的代码段</h2><h2 id="构建一个完整应用"><a href="#构建一个完整应用" class="headerlink" title="构建一个完整应用"></a>构建一个完整应用</h2><h1 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h1><p>定义：</p>
-<ol>
-<li><p>接收者的类型定义和方法声明必须在同一包内</p>
-</li>
-<li><p>接收者不能为内建类型， 可通过<code>type</code>绕过</p>
-</li>
-<li><p>指针接收者直接操作对象内容（推荐）</p>
-</li>
-<li><p>指针重定向</p>
-<blockquote>
-<p>*T    V.method &lt;=&gt; (&amp;V).method</p>
-<p>T     P.method &lt;=&gt; (*P).method</p>
-</blockquote>
-</li>
-</ol>
-<p><strong>继承</strong>：匿名字段</p>
-<p><strong>重写</strong>：同名方法</p>
-<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><p><strong>接口</strong>：一组方法签名</p>
-<p><strong>接口类型</strong>：定义了一组方法，如果某个对象实现了某个接口的所有方法，该对象就实现了该接口</p>
-<p><strong>接口变量</strong>：接口变量可以存储任何实现该接口的对象</p>
-<p><strong>接口参数</strong>：让函数接受实现该接口的对象</p>
-<p><strong>空接口</strong><code>interface &#123;&#125;</code>：所有的类型都实现了空接口, 用于存储任意类型的值</p>
-<p><strong>接口变量存储的类型</strong></p>
-<ul>
-<li><p>comma-ok断言</p>
-<blockquote>
-<p><code> value, ok = element.(T)</code>如果element存储了T类型的数值，那么ok为true，否则false</p>
-</blockquote>
-</li>
-<li><p>switch测试</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">switch</span> v := i.(<span class="hljs-keyword">type</span>) &#123;<br><span class="hljs-keyword">case</span> T:<br>    <span class="hljs-comment">// v 的类型为 T</span><br><span class="hljs-keyword">case</span> S:<br>    <span class="hljs-comment">// v 的类型为 S</span><br><span class="hljs-keyword">default</span>:<br>    <span class="hljs-comment">// 没有匹配，v 与 i 的类型相同</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>嵌入接口</strong>: 隐式包含方法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// io.ReadWriter</span><br><span class="hljs-keyword">type</span> ReadWriter <span class="hljs-keyword">interface</span> &#123;<br>	Reader<br>	Writer<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<p><strong>常见接口</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// fmt.Stringer</span><br><span class="hljs-keyword">type</span> Stringer <span class="hljs-keyword">interface</span> &#123;<br>  String() <span class="hljs-keyword">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// builtins</span><br><span class="hljs-comment">// 模拟错误</span><br><span class="hljs-keyword">type</span> error <span class="hljs-keyword">interface</span> &#123;<br>  Error() <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-comment">// 错误处理工具包errors</span><br>err := errors.New(<span class="hljs-string">&quot;some error&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>	fmt.Print(err)<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// io.Reader</span><br><span class="hljs-keyword">type</span> Reader <span class="hljs-keyword">interface</span> &#123;<br>	Read(p []<span class="hljs-keyword">byte</span>) (n <span class="hljs-keyword">int</span>, err error)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p>检查程序运行时状态的能力</p>
+<h2 id="协程与通道"><a href="#协程与通道" class="headerlink" title="协程与通道"></a>协程与通道</h2><h2 id="网络、模版与网页应用"><a href="#网络、模版与网页应用" class="headerlink" title="网络、模版与网页应用"></a>网络、模版与网页应用</h2><h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="常见陷阱与错误"><a href="#常见陷阱与错误" class="headerlink" title="常见陷阱与错误"></a>常见陷阱与错误</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h2 id="出于性能考虑的代码段"><a href="#出于性能考虑的代码段" class="headerlink" title="出于性能考虑的代码段"></a>出于性能考虑的代码段</h2><h2 id="构建一个完整应用"><a href="#构建一个完整应用" class="headerlink" title="构建一个完整应用"></a>构建一个完整应用</h2><h1 id="反射-1"><a href="#反射-1" class="headerlink" title="反射"></a>反射</h1><p>检查程序运行时状态的能力</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/02.6.md">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/02.6.md</a></p>
 <h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><p><strong>Go的runtime管理的一个线程管理器</strong></p>
 <p><code>go fn(x)</code>会启动一个<code>goroutine</code>并执行<code>fn(x)</code></p>
@@ -1181,12 +1178,6 @@
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2021/02/13/hello-world/">
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
