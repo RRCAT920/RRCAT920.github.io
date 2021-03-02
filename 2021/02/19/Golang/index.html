@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.9k 字
+      8.1k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      99
+      102
        分钟
     </span>
   
@@ -292,7 +292,7 @@
 <p><strong><code>$GOHOSTARCH</code></strong> <strong><code>$GOHOSTOS</code></strong> 本地机器的处理器架构/操作系统（交叉编译时使用， 默认和目标机器一样）</p>
 <p><strong><code>$GOARM</code></strong> 针对基于arm架构的处理器(5~7, 默认6)</p>
 <p><strong><code>$GOMAXPROCS</code></strong> 设置应用程序可用的处理器个数和核数</p>
-<h2 id="Go运行时"><a href="#Go运行时" class="headerlink" title="Go运行时"></a>Go运行时</h2><p>runtime类似虚拟机，管理内存分配、垃圾回收（清除回收器）、栈处理、goroutine、channel、slice、map、reflection</p>
+<h2 id="Go运行时"><a href="#Go运行时" class="headerlink" title="Go运行时"></a>Go运行时</h2><p><code>runtime</code>类似虚拟机，管理内存分配、垃圾回收（清除回收器）、栈处理、<code>goroutine</code>、<code>channel</code>、<code>slice</code>、<code>map</code>、<code>reflect</code></p>
 <p><code>$GOROOT/src/runtime</code></p>
 <h1 id="语言的核心结构与技术"><a href="#语言的核心结构与技术" class="headerlink" title="语言的核心结构与技术"></a>语言的核心结构与技术</h1><h2 id="程序基本结构和要素"><a href="#程序基本结构和要素" class="headerlink" title="程序基本结构和要素"></a>程序基本结构和要素</h2><h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><p>程序一般由关键字、常量、变量、类型、函数、注释组成</p>
 <h3 id="关键字（25）"><a href="#关键字（25）" class="headerlink" title="关键字（25）"></a>关键字（25）</h3><p><code>import</code> <code>package</code></p>
@@ -632,7 +632,7 @@
 <h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><ol>
 <li><p>不能重载</p>
 </li>
-<li><p>具名函数的声明不能嵌套</p>
+<li><p>具名函数不能嵌套</p>
 </li>
 <li><p>函数签名可做类型<code>type &lt;type name&gt; func (...) (...)</code>（函数可作为参数传递）</p>
 <blockquote>
@@ -640,7 +640,7 @@
 <p>高阶函数：返回其他函数的函数 和 接收其他函数作为参数的函数</p>
 </blockquote>
 </li>
-<li><p>函数是一等值，可赋值和比较</p>
+<li><p>函数是一等值，可赋值和相等性比较</p>
 </li>
 </ol>
 <h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><h4 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h4><ol>
@@ -998,19 +998,23 @@
 <h4 id="操作-4"><a href="#操作-4" class="headerlink" title="操作"></a>操作</h4><p>选择器<code>.</code>调用方法，且对指针接受者自动重定向</p>
 <h2 id="接口与反射"><a href="#接口与反射" class="headerlink" title="接口与反射"></a>接口与反射</h2><h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><blockquote>
 <p>接口定义一组方法，这一组方法叫方法集</p>
+<p>提取接口思想：接口可以在开发中归纳出来，且无法改变类层次结构</p>
 </blockquote>
 <h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Id <span class="hljs-keyword">interface</span> &#123;<br>  M1(P) R<br>  M2(P) R<br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="注意点-5"><a href="#注意点-5" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>接口不能包含变量</p>
 </li>
-<li><p>指向接口值的指针非法</p>
+<li><p>指向接口变量的指针非法</p>
 <blockquote>
 <p>接口值又叫接口类型的变量</p>
 </blockquote>
 </li>
-<li><p>实现类型的变量可赋值给接口值</p>
+<li><p>实现类型的变量可赋值给接口变量</p>
 </li>
 <li><p>嵌套接口可能出现命名冲突</p>
+<blockquote>
+<p>嵌套接口即接口继承</p>
+</blockquote>
 </li>
 <li><p>实现类型的切片不能复制给接口切片</p>
 <blockquote>
@@ -1069,7 +1073,16 @@
 </ul>
 </blockquote>
 <h4 id="空接口"><a href="#空接口" class="headerlink" title="空接口"></a>空接口</h4><p><code>任何类型都实现了空接口interface &#123;&#125;</code></p>
-<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p><code>检查程序运行时状态的能力</code></p>
+<h4 id="反射包的核心"><a href="#反射包的核心" class="headerlink" title="反射包的核心"></a>反射包的核心</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 用来描述变量的值和类型</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ValueOf</span><span class="hljs-params">(i <span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">Value</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TypeOf</span><span class="hljs-params">(i <span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">Type</span></span><br></code></pre></td></tr></table></figure>
+<h4 id="操作-6"><a href="#操作-6" class="headerlink" title="操作"></a>操作</h4><ol>
+<li><p>反射修改值</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">x := <span class="hljs-number">3.5</span><br>v := reflect.ValueOf(&amp;x).Elem() <span class="hljs-comment">// 指针反引用</span><br>v.SetFloat64(<span class="hljs-number">4.0</span>)<br><br><span class="hljs-comment">// API</span><br>Value#CanSet() <span class="hljs-keyword">bool</span>	<span class="hljs-comment">// 用来检测Value是否可设置值</span><br>Value#Elem() Value	<span class="hljs-comment">// 用来获得接口包含的v或者指针反引用</span><br>Value#SetTxx(v Txx)	<span class="hljs-comment">// 用来设置值</span><br></code></pre></td></tr></table></figure></li>
+<li><p>反射结构体 <code>结构中只有导出字段可以设置值</code></p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// API</span><br>Value#NumField() <span class="hljs-keyword">int</span> <span class="hljs-comment">// 返回结构体字段个数</span><br>Value#Field(i <span class="hljs-keyword">int</span>) Value <span class="hljs-comment">// 返回第i个结构体字段</span><br>Value#Method(i <span class="hljs-keyword">int</span>) Value <span class="hljs-comment">// 返回第i个方法</span><br><br>Value#FieldByName(name <span class="hljs-keyword">string</span>) Value	<span class="hljs-comment">// 根据名称返回字段</span><br>Value#MethodByName(name <span class="hljs-keyword">string</span>) Value <span class="hljs-comment">// 根据名称返回方法</span><br>Value#Call(in []Value) []Value				<span class="hljs-comment">// 调用方法</span><br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
 <blockquote>
 <p><code>F</code>调用<code>panic</code>，<code>F</code>中断执行，但<code>defer</code>函数正常执行，然后返回调用<code>F</code>的地方，接着<code>panic</code>会向上传递，直到发送<code>panic</code>的<code>goroutine</code>中所有调用的函数返回，此时程序退出。</p>
 </blockquote>
@@ -1082,9 +1095,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		<span class="hljs-keyword">if</span> x := <span class="hljs-built_in">recover</span>(); x != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-comment">// recover and process</span><br>		&#125;<br>	&#125;()<br><br>	<span class="hljs-comment">// normal process</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="协程与通道"><a href="#协程与通道" class="headerlink" title="协程与通道"></a>协程与通道</h2><h2 id="网络、模版与网页应用"><a href="#网络、模版与网页应用" class="headerlink" title="网络、模版与网页应用"></a>网络、模版与网页应用</h2><h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="常见陷阱与错误"><a href="#常见陷阱与错误" class="headerlink" title="常见陷阱与错误"></a>常见陷阱与错误</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h2 id="出于性能考虑的代码段"><a href="#出于性能考虑的代码段" class="headerlink" title="出于性能考虑的代码段"></a>出于性能考虑的代码段</h2><h2 id="构建一个完整应用"><a href="#构建一个完整应用" class="headerlink" title="构建一个完整应用"></a>构建一个完整应用</h2><h1 id="反射-1"><a href="#反射-1" class="headerlink" title="反射"></a>反射</h1><p>检查程序运行时状态的能力</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/02.6.md">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/02.6.md</a></p>
-<h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><p><strong>Go的runtime管理的一个线程管理器</strong></p>
+<h2 id="协程与通道"><a href="#协程与通道" class="headerlink" title="协程与通道"></a>协程与通道</h2><h2 id="网络、模版与网页应用"><a href="#网络、模版与网页应用" class="headerlink" title="网络、模版与网页应用"></a>网络、模版与网页应用</h2><h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="常见陷阱与错误"><a href="#常见陷阱与错误" class="headerlink" title="常见陷阱与错误"></a>常见陷阱与错误</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h2 id="出于性能考虑的代码段"><a href="#出于性能考虑的代码段" class="headerlink" title="出于性能考虑的代码段"></a>出于性能考虑的代码段</h2><h2 id="构建一个完整应用"><a href="#构建一个完整应用" class="headerlink" title="构建一个完整应用"></a>构建一个完整应用</h2><h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><p><strong>Go的runtime管理的一个线程管理器</strong></p>
 <p><code>go fn(x)</code>会启动一个<code>goroutine</code>并执行<code>fn(x)</code></p>
 <ol>
 <li><code>fn</code> ,<code>x</code>的求值在当前<code>goroutine</code>，<code>fn</code>执行在新<code>goroutine</code></li>
@@ -1154,6 +1165,8 @@
                     
                       <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
                     
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B/GO%E6%A0%B8%E5%BF%83/">GO核心</a>
+                    
                   </div>
                 
                 
@@ -1161,8 +1174,6 @@
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
                     
                   </div>
                 
@@ -1174,6 +1185,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/03/02/GoWeb/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">GoWeb</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
