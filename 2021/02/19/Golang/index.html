@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      8.1k 字
+      8.6k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      102
+      109
        分钟
     </span>
   
@@ -399,8 +399,11 @@
 <h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span> <span class="hljs-title">Lock</span>/<span class="hljs-title">Unlock</span><span class="hljs-params">()</span></span><br><span class="hljs-comment">// RWMutex</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(o *Once)</span> <span class="hljs-title">Do</span><span class="hljs-params">(f <span class="hljs-keyword">func</span>()</span>)	 // 确保函数只被调用一次</span><br><br><span class="hljs-comment">// 实现对象锁</span><br><span class="hljs-keyword">type</span> Info <span class="hljs-keyword">struct</span> &#123;<br>  mu sync.Mutex<br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="精密计算"><a href="#精密计算" class="headerlink" title="精密计算"></a>精密计算</h4><p><code>math/big</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewInt</span><span class="hljs-params">(x <span class="hljs-keyword">int64</span>)</span> *<span class="hljs-title">Int</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(z *Int)</span> <span class="hljs-title">Add</span><span class="hljs-params">(x, y *Int)</span> *<span class="hljs-title">Int</span></span><br></code></pre></td></tr></table></figure>
-
-
+<h4 id="读写缓冲"><a href="#读写缓冲" class="headerlink" title="读写缓冲"></a>读写缓冲</h4><p><code>bufio</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">bufio.NewReader(rd io.Reader) *Reader  <span class="hljs-comment">// 返回带缓冲的读取器</span><br>*Reader#ReadString(delim <span class="hljs-keyword">byte</span>) (<span class="hljs-keyword">string</span>, error) <span class="hljs-comment">// 读字符串，直至遇到delim，并将delim读入</span><br>*Reader#Read(p []<span class="hljs-keyword">byte</span>) (n <span class="hljs-keyword">int</span>, err error)	<span class="hljs-comment">// n for 字节数</span><br><br>bufio.NewWriter(w io.Writer) *Writer 	<span class="hljs-comment">// 返回带缓冲的写出器</span><br>*Writer#WriteString(s <span class="hljs-keyword">string</span>) (<span class="hljs-keyword">int</span>, error)<br></code></pre></td></tr></table></figure>
+<h4 id="文件操作工具"><a href="#文件操作工具" class="headerlink" title="文件操作工具"></a>文件操作工具</h4><p><code>io/ioutil</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 将整个文件读到字符串/将字符串写入整个文件</span><br>ioutil.ReadFile(filename <span class="hljs-keyword">string</span>) ([]<span class="hljs-keyword">byte</span>, error)<br>ioutil.WriteFile(filename <span class="hljs-keyword">string</span>, data []<span class="hljs-keyword">byte</span>, perm os.FileMode) error 	<span class="hljs-comment">// perm like 0644</span><br></code></pre></td></tr></table></figure>
+<h4 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h4><p><code>os.Args []string</code> 0: 程序名</p>
 <h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>定义 <code>const identifier [type] = value</code></p>
 <h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
 <li><p>只能存储布尔型、数字型、字符串的数据</p>
@@ -1082,7 +1085,50 @@
  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// API</span><br>Value#NumField() <span class="hljs-keyword">int</span> <span class="hljs-comment">// 返回结构体字段个数</span><br>Value#Field(i <span class="hljs-keyword">int</span>) Value <span class="hljs-comment">// 返回第i个结构体字段</span><br>Value#Method(i <span class="hljs-keyword">int</span>) Value <span class="hljs-comment">// 返回第i个方法</span><br><br>Value#FieldByName(name <span class="hljs-keyword">string</span>) Value	<span class="hljs-comment">// 根据名称返回字段</span><br>Value#MethodByName(name <span class="hljs-keyword">string</span>) Value <span class="hljs-comment">// 根据名称返回方法</span><br>Value#Call(in []Value) []Value				<span class="hljs-comment">// 调用方法</span><br></code></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
+<h1 id="高级编程"><a href="#高级编程" class="headerlink" title="高级编程"></a>高级编程</h1><h2 id="读写数据"><a href="#读写数据" class="headerlink" title="读写数据"></a>读写数据</h2><h3 id="标准读写-输入输出"><a href="#标准读写-输入输出" class="headerlink" title="标准读写(输入输出)"></a>标准读写(输入输出)</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// API like </span><br><span class="hljs-comment">// read: 	Scan(...) (n int, err error)</span><br><span class="hljs-comment">// write: Print(...) (n int, err error)</span><br><br><span class="hljs-comment">// 扫描来自标准输入的文本，将空格分隔的值依次存入参数中，直到遇到换行</span><br>fmt.Scanln(a ...<span class="hljs-keyword">interface</span>&#123;&#125;) (n <span class="hljs-keyword">int</span>, err error)	<br>fmt.Println(a ...<span class="hljs-keyword">interface</span>&#123;&#125;) (n <span class="hljs-keyword">int</span>, err error)<br></code></pre></td></tr></table></figure>
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><p><code>go中*os.File表示文件，即文件句柄</code></p>
+<ol>
+<li><p>读</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">fin, err := os.Open(<span class="hljs-string">&quot;in&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-comment">// no file or permission denied </span><br>  log.Fatal(err)<br>&#125;<br><span class="hljs-keyword">defer</span> fin.Close()<br>in := bufio.NewReader(fin)<br><span class="hljs-comment">// read from file</span><br></code></pre></td></tr></table></figure></li>
+<li><p>写</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 写</span><br>fout, err := os.OpenFile(<span class="hljs-string">&quot;out&quot;</span>, os.O_WRONLY|os.O_CREATE, <span class="hljs-number">0644</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  log.Fatal(err)<br>&#125;<br><span class="hljs-keyword">defer</span> fout.Close()<br>out := bufio.NewWriter(fout)<br><span class="hljs-comment">// write to file</span><br>out.Flush()<br></code></pre></td></tr></table></figure></li>
+<li><p>拷贝</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go">src, err := os.Open(<span class="hljs-string">&quot;in&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-keyword">return</span><br>&#125;<br><span class="hljs-keyword">defer</span> src.Close()<br>dst, err := os.Create(<span class="hljs-string">&quot;out&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-keyword">return</span><br>&#125;<br><span class="hljs-keyword">defer</span> dst.Close()<br>io.Copy(dst, src)<br></code></pre></td></tr></table></figure>
+<p>其他文件格式:</p>
+</li>
+</ol>
+<ul>
+<li><p>压缩文件 <code>compress/gzip, bzip2, ...</code></p>
+</li>
+<li><p>json文件 <code>encoding/json</code></p>
+<blockquote>
+<p>Go                JSON</p>
+<p>bool            boolean</p>
+<p>float64        number</p>
+<p>string          string</p>
+<p>nil                null</p>
+<p>JSON对象 仅支持map[string]T</p>
+<p>不支持channel、function、递归数据类型(该类型会序列化无限循环)</p>
+<p>支持指针（编码指针指向的值）</p>
+</blockquote>
+<p>  注意点：解码到结构体，填充匹配字段，忽略不匹配字段</p>
+</li>
+<li><p>xml文件 <code>encoding/xml</code></p>
+</li>
+<li><p>gob文件 <code>encoding/gob</code></p>
+<blockquote>
+<p>Go binary</p>
+</blockquote>
+<p>  注意点：</p>
+<ol>
+<li>仅编码非零值的可导出字段</li>
+<li>解码填充名称匹配、类型兼容的字段，忽略不匹配字段</li>
+</ol>
+</li>
+<li><p>csv文件 <code>encoding/csv</code></p>
+</li>
+</ul>
+<h2 id="错误处理与测试"><a href="#错误处理与测试" class="headerlink" title="错误处理与测试"></a>错误处理与测试</h2><h3 id="panic和recover函数"><a href="#panic和recover函数" class="headerlink" title="panic和recover函数"></a>panic和recover函数</h3><p><code>panic</code>中断当前控制流程，进入<code>panic</code>状态</p>
 <blockquote>
 <p><code>F</code>调用<code>panic</code>，<code>F</code>中断执行，但<code>defer</code>函数正常执行，然后返回调用<code>F</code>的地方，接着<code>panic</code>会向上传递，直到发送<code>panic</code>的<code>goroutine</code>中所有调用的函数返回，此时程序退出。</p>
 </blockquote>
