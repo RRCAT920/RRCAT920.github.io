@@ -1097,6 +1097,9 @@
 <p>其他文件格式:</p>
 </li>
 </ol>
+<blockquote>
+<p>编码解码体系基于反射，只关注可导出字段</p>
+</blockquote>
 <ul>
 <li><p>压缩文件 <code>compress/gzip, bzip2, ...</code></p>
 </li>
@@ -1107,11 +1110,11 @@
 <p>float64        number</p>
 <p>string          string</p>
 <p>nil                null</p>
+<p>slice            array</p>
 <p>JSON对象 仅支持map[string]T</p>
 <p>不支持channel、function、递归数据类型(该类型会序列化无限循环)</p>
 <p>支持指针（编码指针指向的值）</p>
 </blockquote>
-<p>  注意点：解码到结构体，填充匹配字段，忽略不匹配字段</p>
 </li>
 <li><p>xml文件 <code>encoding/xml</code></p>
 </li>
@@ -1119,11 +1122,6 @@
 <blockquote>
 <p>Go binary</p>
 </blockquote>
-<p>  注意点：</p>
-<ol>
-<li>仅编码非零值的可导出字段</li>
-<li>解码填充名称匹配、类型兼容的字段，忽略不匹配字段</li>
-</ol>
 </li>
 <li><p>csv文件 <code>encoding/csv</code></p>
 </li>
