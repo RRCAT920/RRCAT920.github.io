@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>CLRS</title>
-    <link href="/2021/03/02/CLRS/"/>
-    <url>/2021/03/02/CLRS/</url>
+    <title>算法设计指南读书笔记</title>
+    <link href="/2021/03/05/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%8D%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <url>/2021/03/05/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%8D%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="算法设计指引"><a href="#算法设计指引" class="headerlink" title="算法设计指引"></a>算法设计指引</h1><p>算法：完成某项特定任务的具体步骤，更是程序后的思想。</p><blockquote><p>任务：将满足要求的输入算例转成预期输出</p><p>算例：一个要计算的例子</p></blockquote><p>如何描述算法问题：</p><ol><li><p>描述输入</p><blockquote><p>算例的完备集合</p></blockquote></li><li><p>描述输出</p></li></ol><p>优秀算法的理想特性：</p><ol><li>正确</li><li>高效</li><li>易于实现</li></ol>]]></content>
     
     
     <categories>
