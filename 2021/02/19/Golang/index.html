@@ -404,7 +404,8 @@
 <h4 id="文件操作工具"><a href="#文件操作工具" class="headerlink" title="文件操作工具"></a>文件操作工具</h4><p><code>io/ioutil</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 将整个文件读到字符串/将字符串写入整个文件</span><br>ioutil.ReadFile(filename <span class="hljs-keyword">string</span>) ([]<span class="hljs-keyword">byte</span>, error)<br>ioutil.WriteFile(filename <span class="hljs-keyword">string</span>, data []<span class="hljs-keyword">byte</span>, perm os.FileMode) error 	<span class="hljs-comment">// perm like 0644</span><br></code></pre></td></tr></table></figure>
 <h4 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h4><p><code>os.Args []string</code> 0: 程序名</p>
-<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>定义 <code>const identifier [type] = value</code></p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>定义 </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> i = <span class="hljs-number">1</span><br><span class="hljs-keyword">const</span> i <span class="hljs-keyword">int</span> = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
 <li><p>只能存储布尔型、数字型、字符串的数据</p>
 </li>
@@ -424,13 +425,16 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 赋值一个常量时，之后没赋值的常量都会应用上一行的赋值表达式</span><br><span class="hljs-keyword">const</span> (<br>	a = <span class="hljs-literal">iota</span>  <span class="hljs-comment">// a = 0</span><br>	b         <span class="hljs-comment">// b = 1</span><br>	c         <span class="hljs-comment">// c = 2</span><br>	d = <span class="hljs-number">5</span>     <span class="hljs-comment">// d = 5   </span><br>	e         <span class="hljs-comment">// e = 5</span><br>)<br><br><span class="hljs-comment">// 赋值两个常量，iota 只会增长一次，而不会因为使用了两次就增长两次</span><br><span class="hljs-keyword">const</span> (<br>	Apple, Banana = <span class="hljs-literal">iota</span> + <span class="hljs-number">1</span>, <span class="hljs-literal">iota</span> + <span class="hljs-number">2</span> <span class="hljs-comment">// Apple=1 Banana=2</span><br>	Cherimoya, Durian                  <span class="hljs-comment">// Cherimoya=2 Durian=3</span><br>	Elderberry, Fig                    <span class="hljs-comment">// Elderberry=3, Fig=4</span><br><br>)<br><br><span class="hljs-comment">// 使用 iota 结合 位运算 表示资源状态的使用案例</span><br><span class="hljs-keyword">const</span> (<br>	Open = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-literal">iota</span>  <span class="hljs-comment">// 0001</span><br>	Close             <span class="hljs-comment">// 0010</span><br>	Pending           <span class="hljs-comment">// 0100</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>	_           = <span class="hljs-literal">iota</span>             <span class="hljs-comment">// 使用 _ 忽略不需要的 iota</span><br>	KB = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>)          <span class="hljs-comment">// 1 &lt;&lt; (10*1)</span><br>	MB                             <span class="hljs-comment">// 1 &lt;&lt; (10*2)</span><br>	GB                             <span class="hljs-comment">// 1 &lt;&lt; (10*3)</span><br>	TB                             <span class="hljs-comment">// 1 &lt;&lt; (10*4)</span><br>	PB                             <span class="hljs-comment">// 1 &lt;&lt; (10*5)</span><br>	EB                             <span class="hljs-comment">// 1 &lt;&lt; (10*6)</span><br>	ZB                             <span class="hljs-comment">// 1 &lt;&lt; (10*7)</span><br>	YB                             <span class="hljs-comment">// 1 &lt;&lt; (10*8)</span><br>)<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>声明 <code>var identifier type</code></p>
-<p>初始化 <code>var indetifier [type] = value</code></p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>声明 </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> i <span class="hljs-keyword">int</span><br></code></pre></td></tr></table></figure>
+<p>初始化 </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>变量除了可以在全局声明中初始化，还可以在<code>init</code>函数中初始化。</p>
 <p>初始化以单线程执行，并按包的依赖关系顺序执行</p>
 </blockquote>
-<p>局部变量的简短声明 <code>identifier := value</code></p>
+<p>局部变量的简短声明 </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fn</span><span class="hljs-params">()</span></span> &#123;<br>  i := <span class="hljs-number">1</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>同一变量不能二次简短声明</p>
 </blockquote>
@@ -467,11 +471,10 @@
 <li>值存储在堆中</li>
 </ol>
 <p><img src="/img/ref.jpg" srcset="/img/loading.gif" alt="引用类型及赋值"></p>
-<h3 id="类型相关操作"><a href="#类型相关操作" class="headerlink" title="类型相关操作"></a>类型相关操作</h3><h4 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h4><p><code>a = T(b)</code> <strong>不同类型之间需要显示转换</strong></p>
+<h3 id="类型相关操作"><a href="#类型相关操作" class="headerlink" title="类型相关操作"></a>类型相关操作</h3><h4 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">i := <span class="hljs-number">1</span><br>j := <span class="hljs-keyword">float64</span>(i) <span class="hljs-comment">// 必须显示转换</span><br></code></pre></td></tr></table></figure>
 <h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>声明变量（常量）时不指定类型，类型由右值推导</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> i = <span class="hljs-number">1</span>				<span class="hljs-comment">//int</span><br>i := <span class="hljs-number">42</span>           <span class="hljs-comment">// int</span><br>f := <span class="hljs-number">3.142</span>        <span class="hljs-comment">// float64</span><br>g := <span class="hljs-number">0.867</span> + <span class="hljs-number">0.5i</span> <span class="hljs-comment">// complex128</span><br></code></pre></td></tr></table></figure>
-<h4 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h4><p><code>type typeName typeLiteral</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> ages <span class="hljs-keyword">int</span><br><br><span class="hljs-keyword">type</span> money <span class="hljs-keyword">float32</span><br><br><span class="hljs-keyword">type</span> months <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span><br><br>m := months &#123;<br>	<span class="hljs-string">&quot;January&quot;</span>:<span class="hljs-number">31</span>,<br>	<span class="hljs-string">&quot;February&quot;</span>:<span class="hljs-number">28</span>,<br>	...<br>	<span class="hljs-string">&quot;December&quot;</span>:<span class="hljs-number">31</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> ages <span class="hljs-keyword">int</span><br></code></pre></td></tr></table></figure>
 
 
 <h3 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h3><h4 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h4><p><code>bool(true/false)</code> </p>
@@ -585,25 +588,19 @@
 <p>循环结构：</p>
 <p><code>for(range)</code>结构</p>
 </blockquote>
-<h3 id="if-else结构"><a href="#if-else结构" class="headerlink" title="if-else结构"></a>if-else结构</h3><h4 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> [initialization;] condition &#123;<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="if-else结构"><a href="#if-else结构" class="headerlink" title="if-else结构"></a>if-else结构</h3><h4 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">i := <span class="hljs-number">1</span><br><span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> &#123;<br>  fmt.Println(<span class="hljs-string">&quot;true&quot;</span>)<br>&#125;<br><br><span class="hljs-keyword">if</span> i := <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span> &#123;<br>  fmt.Println(i)<br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h4><p>初始化语句中的变量作用于整个结构</p>
 <blockquote>
 <p><code>if</code> <code>else if</code> <code>else</code>中</p>
 </blockquote>
-<h3 id="switch结构"><a href="#switch结构" class="headerlink" title="switch结构"></a>switch结构</h3><h4 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">switch</span> [initialization;] 变量 &#123;<br><span class="hljs-keyword">case</span> 值<span class="hljs-number">1</span>[, 值<span class="hljs-number">2</span>]:<br>  ...<br><span class="hljs-keyword">case</span> 值<span class="hljs-number">3</span>:<br>  ...<br><span class="hljs-keyword">default</span>:<br>  ...<br>&#125;<br><br><span class="hljs-keyword">switch</span> [initialization;] &#123;<br><span class="hljs-keyword">case</span> 条件<span class="hljs-number">1</span>:<br>  ...<br><span class="hljs-keyword">case</span> 条件<span class="hljs-number">2</span>:<br>  ...<br><span class="hljs-keyword">default</span>:<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="switch结构"><a href="#switch结构" class="headerlink" title="switch结构"></a>switch结构</h3><h4 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">switch</span> i &#123;<br><span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br><span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>  f()  <br>&#125;<br><br><span class="hljs-keyword">switch</span> &#123;<br><span class="hljs-keyword">case</span> i &gt; <span class="hljs-number">0</span>:<br>  f0()<br><span class="hljs-keyword">case</span> i &lt; <span class="hljs-number">0</span>:<br>  f1()<br><span class="hljs-keyword">default</span>:<br>  f2()<br>&#125;<br><br><span class="hljs-keyword">switch</span> res := calc(); &#123;<br><span class="hljs-keyword">case</span> res &lt; <span class="hljs-number">0</span>:<br>  f0()<br><span class="hljs-keyword">case</span> res &gt; <span class="hljs-number">0</span>:<br>  f1()<br><span class="hljs-keyword">default</span>:<br>  f2()<br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h4><ol>
 <li>自上而下匹配</li>
 <li><code>case</code>自动<code>break</code>，除非<code>fallthrough</code></li>
 </ol>
-<h3 id="for结构"><a href="#for结构" class="headerlink" title="for结构"></a>for结构</h3><p><code>for 初始化语句; 条件表达式; 后置语句 &#123;&#125;</code> </p>
-<p><code>for 条件表达式 &#123;&#125;</code> </p>
-<p><code>for &#123;&#125;</code> 无限循环</p>
-<p><code>for ix, val := range coll &#123;&#125;</code> 迭代集合</p>
-<blockquote>
-<p><code>val</code>为元素的值拷贝</p>
-<p><code>for-range</code>会按UTF-8规则识别Unicode编码的字符</p>
-<p>口诀：省2空1</p>
-</blockquote>
+<h3 id="for结构"><a href="#for结构" class="headerlink" title="for结构"></a>for结构</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>  fmt.Println(i)<br>&#125;<br>----------------------------------------------------------------------------------------<br><span class="hljs-keyword">for</span> i &gt; <span class="hljs-number">0</span> &#123;<br>  f()<br>&#125;<br>----------------------------------------------------------------------------------------<br><span class="hljs-keyword">for</span> &#123;<br>  ListenAndServe()<br>&#125;<br>----------------------------------------------------------------------------------------<br><span class="hljs-keyword">for</span> ix, val := <span class="hljs-keyword">range</span> seq &#123;<br>  items[ix] = val * <span class="hljs-number">2</span><br>&#125;<br><span class="hljs-comment">// val为拷贝值</span><br><span class="hljs-comment">// 若seq为Unicode字符串，则按UTF-8拆分</span><br><span class="hljs-comment">// 口诀：省2缺1</span><br></code></pre></td></tr></table></figure>
+
+
 <h3 id="break和continue"><a href="#break和continue" class="headerlink" title="break和continue"></a>break和continue</h3><p><code>break</code>结束循环</p>
 <p><code>continue</code>跳过当前迭代</p>
 <blockquote>
@@ -631,7 +628,7 @@
 <p>除了main()、init()函数外，其它所有类型的函数都可以有参数与返回值</p>
 <p>函数参数、返回值以及它们的类型被统称为函数签名</p>
 </blockquote>
-<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">funcName</span><span class="hljs-params">(parameterList)</span> <span class="hljs-params">(returnValueList)</span></span> &#123;<br>  ...<br>&#125;<br><br>parameterList: (p1 type1, p2 type2, ...)<br>returnValueList: (r1 type1, r2 type2, ...)<br></code></pre></td></tr></table></figure>
+<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Add</span><span class="hljs-params">(x, y <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(sum <span class="hljs-keyword">int</span>)</span></span> &#123;<br>  sum = x + y<br>  <span class="hljs-keyword">return</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><ol>
 <li><p>不能重载</p>
 </li>
@@ -732,14 +729,7 @@
 <p><code>[]</code>进行操作</p>
 </blockquote>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>同类型元素的定长有序序列</p>
-<h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><p>声明格式：<code>var id [len]type</code></p>
-<p>初始化:</p>
-<ol>
-<li><code>id := [len]type&#123;v1, ...&#125;</code></li>
-<li><code>id := [...]type&#123;v1, ...&#125;</code></li>
-<li><code>id := [len]type&#123;ix1: v1, ...&#125;</code></li>
-<li><code>id := new([len]type)</code></li>
-</ol>
+<h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> arr [<span class="hljs-number">10</span>]<span class="hljs-keyword">int</span> <span class="hljs-comment">// 声明</span><br><br>arr := [...]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;	<span class="hljs-comment">// 初始化</span><br></code></pre></td></tr></table></figure>
 <h4 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>长度必须是常量表达式，且为非负整数</p>
 </li>
@@ -766,7 +756,7 @@
 <h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><ol>
 <li>通过<code>[索引]</code>读取、修改元素的值</li>
 <li>迭代<ul>
-<li><code>for i := 0; i &lt; len(A); &#123;&#125;</code></li>
+<li><code>for i := 0; i &lt; len(A); i++&#123;&#125;</code></li>
 <li><code>for ix, value := range A &#123;&#125;</code></li>
 </ul>
 </li>
@@ -782,28 +772,8 @@
 <p>该数组称之为相关数组，通常是匿名的</p>
 <p>这个片段可以是整个数组，或者是由起始和终止索引标识的一些项的子集</p>
 </blockquote>
-<h4 id="声明和初始化-1"><a href="#声明和初始化-1" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><p>声明：<code>var id []type</code></p>
-<p>初始化：</p>
-<ul>
-<li><p><code>id := A[start:end]</code></p>
-<blockquote>
-<p>A for array</p>
-</blockquote>
-</li>
-<li><p><code>id := []type&#123;v1, ...&#125;</code></p>
-</li>
-<li><p><code>id := S[start:end]</code></p>
-<blockquote>
-<p>S for Slice，仍然引用相关数组</p>
-</blockquote>
-</li>
-<li><p><code>id := make([]type, len[, cap])</code>创建一个切片和相关数组</p>
-<blockquote>
-<p>cap省略时，len(s) == cap(s) == len</p>
-</blockquote>
-<p>  <img src="/img/makeslice.png" srcset="/img/loading.gif" alt="make切片的内存结构"></p>
-</li>
-</ul>
+<h4 id="声明和初始化-1"><a href="#声明和初始化-1" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> sl []<span class="hljs-keyword">int</span>	<span class="hljs-comment">// 声明</span><br>-----------------------------------------------------------------------------------------<br>sl := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">10</span>)  <span class="hljs-comment">// make初始化，cap省略时，len(s) == cap(s) == len</span><br>-----------------------------------------------------------------------------------------<br>sl := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;  <span class="hljs-comment">// 字面值初始化</span><br>-----------------------------------------------------------------------------------------<br>sl := arr[:<span class="hljs-number">3</span>]  <span class="hljs-comment">// 从数组初始化</span><br>-----------------------------------------------------------------------------------------<br>sl := sl1[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]	<span class="hljs-comment">// 从切片初始化，仍然引用相关数组</span><br></code></pre></td></tr></table></figure>
+<p><img src="/img/makeslice.png" srcset="/img/loading.gif" alt="make切片的内存结构"></p>
 <h4 id="注意点-1"><a href="#注意点-1" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>可索引且长度可变</p>
 </li>
@@ -854,12 +824,7 @@
 <blockquote>
 <p>快速寻找值的理想结构</p>
 </blockquote>
-<h4 id="声明和初始化-2"><a href="#声明和初始化-2" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><p>声明：<code>var id map[keytype]valuetype</code></p>
-<p>初始化：</p>
-<ul>
-<li><code>id := map[keytype]valuetype&#123;key: value, ...&#125; </code></li>
-<li><code>id := make(map[keytype]valuetype, capacity)</code></li>
-</ul>
+<h4 id="声明和初始化-2"><a href="#声明和初始化-2" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> data <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125; <span class="hljs-comment">// 声明</span><br><br>data := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;jack&quot;</span>, <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;123456&quot;</span>&#125;  <span class="hljs-comment">// 字面值初始化</span><br>data := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>, <span class="hljs-number">16</span>)  <span class="hljs-comment">// make初始化</span><br></code></pre></td></tr></table></figure>
 <h4 id="注意点-2"><a href="#注意点-2" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>长度动态增长</p>
 </li>
@@ -942,15 +907,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> digitRegexp = regexp.MustCompile(<span class="hljs-string">`\d+`</span>)<br><br><span class="hljs-comment">// 返回的字节切片引用了整个文件（即占用了整个文件的内存）</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">FindDigits</span><span class="hljs-params">(filename <span class="hljs-keyword">string</span>)</span> []<span class="hljs-title">byte</span></span> &#123;<br>	file, _ := ioutil.ReadFile(filename)<br>	<span class="hljs-keyword">return</span> digitRegexp.Find(file)<br>&#125;<br><br><span class="hljs-comment">// 仅占用有效数字的内存</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LowFindDigits</span><span class="hljs-params">(filename <span class="hljs-keyword">string</span>)</span> []<span class="hljs-title">byte</span></span> &#123;<br>	file, _ := ioutil.ReadFile(filename)<br>	digits := digitRegexp.Find(file)<br>	cache := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">byte</span>, <span class="hljs-built_in">len</span>(digits))<br>	<span class="hljs-built_in">copy</span>(cache, digits)<br>	<span class="hljs-keyword">return</span> cache<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="结构与方法"><a href="#结构与方法" class="headerlink" title="结构与方法"></a>结构与方法</h2><h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><h4 id="定义、声明、初始化"><a href="#定义、声明、初始化" class="headerlink" title="定义、声明、初始化"></a>定义、声明、初始化</h4><p>定义:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> T <span class="hljs-keyword">struct</span> &#123;<br>  field fieldtype [tag] <span class="hljs-comment">// tag是字符串</span><br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>声明：<code>var id T</code></p>
-<p>初始化：</p>
-<ul>
-<li><code>id := T&#123;value, ...&#125;</code></li>
-<li><code>id := T&#123;field: value, ...&#125;</code></li>
-<li><code>id := new(T)</code>等价于<code>id := &amp;T&#123;&#125;</code></li>
-</ul>
+<h2 id="结构与方法"><a href="#结构与方法" class="headerlink" title="结构与方法"></a>结构与方法</h2><h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><h4 id="定义、声明、初始化"><a href="#定义、声明、初始化" class="headerlink" title="定义、声明、初始化"></a>定义、声明、初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 定义</span><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>  name <span class="hljs-keyword">string</span> <span class="hljs-string">`json: &quot;username&quot;`</span><br>  <span class="hljs-comment">// ...</span><br>&#125;<br><br><span class="hljs-comment">// 声明</span><br><span class="hljs-keyword">var</span> u User<br><br><span class="hljs-comment">// 初始化</span><br>u := T&#123;name: <span class="hljs-string">&quot;jack&quot;</span>&#125;<br><br>u := &amp;T&#123;name: <span class="hljs-string">&quot;jack&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
 <p><img src="/img/newStruct.jpg" srcset="/img/loading.gif" alt="new初始化"></p>
 <p><img src="/img/structLiteral.jpg" srcset="/img/loading.gif" alt="字面量初始化"></p>
 <h4 id="注意点-3"><a href="#注意点-3" class="headerlink" title="注意点"></a>注意点</h4><ol>
@@ -986,7 +943,7 @@
 <blockquote>
 <p>类型 T（或 *T）上的所有方法的集合叫做类型 T（或 *T）的方法集（method set）</p>
 </blockquote>
-<h4 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h4><p><code>func (recv T) methodName(paramterList) returnValueList &#123;&#125;</code></p>
+<h4 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Math &#123;<br>  X <span class="hljs-keyword">int</span><br>  Y <span class="hljs-keyword">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Math)</span> <span class="hljs-title">Add</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123;<br>  <span class="hljs-keyword">return</span> m.X + m.Y<br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="注意点-4"><a href="#注意点-4" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>类型和其方法必须在同一个包里定义</p>
 </li>
@@ -1003,7 +960,7 @@
 <p>接口定义一组方法，这一组方法叫方法集</p>
 <p>提取接口思想：接口可以在开发中归纳出来，且无法改变类层次结构</p>
 </blockquote>
-<h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Id <span class="hljs-keyword">interface</span> &#123;<br>  M1(P) R<br>  M2(P) R<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Stringer <span class="hljs-keyword">interface</span> &#123;<br>  String() <span class="hljs-keyword">string</span>  <br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="注意点-5"><a href="#注意点-5" class="headerlink" title="注意点"></a>注意点</h4><ol>
 <li><p>接口不能包含变量</p>
 </li>
