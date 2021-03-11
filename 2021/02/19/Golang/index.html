@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.7k 字
+      2.9k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      32
+      34
        分钟
     </span>
   
@@ -287,10 +287,7 @@
 <li>Go会自动调用</li>
 </ol>
 <p>不同点：</p>
-<ol>
-<li><code>main</code>只能作用于<code>main</code>包, <code>init</code>可作用于所有包</li>
-<li><code>main</code>包必须有一个<code>main</code>，包中可有任意个<code>init</code>(推荐一个)</li>
-</ol>
+<p><code>main()</code>只能作用于<code>main</code>包, <code>init()</code>可作用于所有包</p>
 <h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>结构化代码的方式：每个Go程序都由包这种概念组成，可以使用本包和其他包。</p>
 <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h3><ol>
 <li><p><strong>可见性原则</strong></p>
@@ -412,7 +409,7 @@
 <li><p>函数参数、返回值以及它们的类型被统称为函数签名</p>
 </li>
 </ol>
-<h1 id="内置容器"><a href="#内置容器" class="headerlink" title="内置容器"></a>内置容器</h1><h3 id="通用操作"><a href="#通用操作" class="headerlink" title="通用操作"></a>通用操作</h3><ol>
+<h1 id="内置容器"><a href="#内置容器" class="headerlink" title="内置容器"></a>内置容器</h1><h2 id="通用操作"><a href="#通用操作" class="headerlink" title="通用操作"></a>通用操作</h2><ol>
 <li><p>索引<code>[index/key]</code></p>
 </li>
 <li><p>长度/容量<code>len(C)/cap(C)</code></p>
@@ -439,46 +436,51 @@
 </blockquote>
 </li>
 </ol>
-<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a><strong>定义</strong></h4><p>utf-8字符序列，由<code>&quot;&quot;</code>或<code>``</code>包裹</p>
-<h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> s <span class="hljs-keyword">string</span><br>s := <span class="hljs-string">&quot;hello&quot;</span><br></code></pre></td></tr></table></figure>
-<h4 id="内存结构"><a href="#内存结构" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/img/golang/string.png" srcset="/img/loading.gif"></p>
-<h4 id="注意点-2"><a href="#注意点-2" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a><strong>定义</strong></h3><p>utf-8字符序列，由<code>&quot;&quot;</code>或<code>``</code>包裹</p>
+<h3 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a>声明和初始化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> s <span class="hljs-keyword">string</span><br>s := <span class="hljs-string">&quot;hello&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="内存结构"><a href="#内存结构" class="headerlink" title="内存结构"></a>内存结构</h3><p><img src="/img/golang/string.png" srcset="/img/loading.gif"></p>
+<h3 id="注意点-2"><a href="#注意点-2" class="headerlink" title="注意点"></a>注意点</h3><ol>
 <li>值不可变</li>
 <li>按字节比较</li>
 </ol>
-<h4 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h4><ol>
+<h3 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h3><ol>
 <li><code>!= == &lt; &lt;= &gt; &gt;=</code>比较</li>
 <li><code>+</code>拼接</li>
 </ol>
-<h4 id="常见错误-1"><a href="#常见错误-1" class="headerlink" title="常见错误"></a>常见错误</h4><p><code>&amp;S[i]</code>取某一个字节的地址非法</p>
-<h3 id="array"><a href="#array" class="headerlink" title="array"></a>array</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p>同类元素的定长有序序列</p>
-<h4 id="声明和初始化-1"><a href="#声明和初始化-1" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> A [<span class="hljs-number">5</span>]<span class="hljs-keyword">int</span><br>A := [...]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="内存结构-1"><a href="#内存结构-1" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/img/golang/array.png" srcset="/img/loading.gif"></p>
-<h4 id="注意点-3"><a href="#注意点-3" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<h3 id="常见错误-1"><a href="#常见错误-1" class="headerlink" title="常见错误"></a>常见错误</h3><ol>
+<li><p><code>&amp;S[i]</code>取某一个字节的地址非法</p>
+</li>
+<li><p><code>for-range S</code>按<code>byte</code>计算索引，<code>for-range []rune(S)</code>按<code>rune</code>计算索引</p>
+</li>
+</ol>
+<h2 id="array"><a href="#array" class="headerlink" title="array"></a>array</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>同类元素的定长有序序列</p>
+<h3 id="声明和初始化-1"><a href="#声明和初始化-1" class="headerlink" title="声明和初始化"></a>声明和初始化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> A [<span class="hljs-number">5</span>]<span class="hljs-keyword">int</span><br>A := [...]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="内存结构-1"><a href="#内存结构-1" class="headerlink" title="内存结构"></a>内存结构</h3><p><img src="/img/golang/array.png" srcset="/img/loading.gif"></p>
+<h3 id="注意点-3"><a href="#注意点-3" class="headerlink" title="注意点"></a>注意点</h3><ol>
 <li><strong>长度是数组类型的一部分</strong></li>
 <li><strong>值类型</strong></li>
 <li>长度只能为常量表达式</li>
 </ol>
-<h4 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h4><ol>
+<h3 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h3><ol>
 <li>同类型<code>== !=</code>比较</li>
 <li>传指针、切片来修改数组</li>
 </ol>
-<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><h4 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h4><p>数组片段的引用，即动态数组</p>
-<h4 id="声明和初始化-2"><a href="#声明和初始化-2" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> S []<span class="hljs-keyword">int</span><br>S := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br>S := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="内存结构-2"><a href="#内存结构-2" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/img/golang/slice.png" srcset="/img/loading.gif" alt="三个域：相关数组指针、长度、容量"></p>
-<h4 id="注意点-4"><a href="#注意点-4" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>数组片段的引用，即动态数组</p>
+<h3 id="声明和初始化-2"><a href="#声明和初始化-2" class="headerlink" title="声明和初始化"></a>声明和初始化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> S []<span class="hljs-keyword">int</span><br>S := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br>S := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="内存结构-2"><a href="#内存结构-2" class="headerlink" title="内存结构"></a>内存结构</h3><p><img src="/img/golang/slice.png" srcset="/img/loading.gif" alt="三个域：相关数组指针、长度、容量"></p>
+<h3 id="注意点-4"><a href="#注意点-4" class="headerlink" title="注意点"></a>注意点</h3><ol>
 <li><strong>长度可变</strong></li>
 <li><strong>引用类型</strong></li>
 <li><strong>不能比较</strong></li>
 </ol>
-<h4 id="操作-3"><a href="#操作-3" class="headerlink" title="操作"></a>操作</h4><ol>
+<h3 id="操作-3"><a href="#操作-3" class="headerlink" title="操作"></a>操作</h3><ol>
 <li>复制<code>copy</code></li>
 <li>追加<code>append</code></li>
 </ol>
-<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><p>元素对无序集合</p>
-<h4 id="声明和初始化-3"><a href="#声明和初始化-3" class="headerlink" title="声明和初始化"></a>声明和初始化</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> data <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;<br>data := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;jack&quot;</span>&#125;<br>data := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>, <span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
-<h4 id="内存结构-3"><a href="#内存结构-3" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/img/golang/map.png" srcset="/img/loading.gif"></p>
-<h4 id="注意点-5"><a href="#注意点-5" class="headerlink" title="注意点"></a>注意点</h4><ol>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p>元素对无序集合</p>
+<h3 id="声明和初始化-3"><a href="#声明和初始化-3" class="headerlink" title="声明和初始化"></a>声明和初始化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> data <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;<br>data := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;jack&quot;</span>&#125;<br>data := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>, <span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="内存结构-3"><a href="#内存结构-3" class="headerlink" title="内存结构"></a>内存结构</h3><p><img src="/img/golang/map.png" srcset="/img/loading.gif"></p>
+<h3 id="注意点-5"><a href="#注意点-5" class="headerlink" title="注意点"></a>注意点</h3><ol>
 <li><p><strong>长度可变</strong></p>
 </li>
 <li><p><strong>引用类型</strong></p>
@@ -493,7 +495,7 @@
 <li><p><strong>线程不安全</strong></p>
 </li>
 </ol>
-<h4 id="操作-4"><a href="#操作-4" class="headerlink" title="操作"></a>操作</h4><ol>
+<h3 id="操作-4"><a href="#操作-4" class="headerlink" title="操作"></a>操作</h3><ol>
 <li><p>检测<code>key</code>是否存在 <code>val, ok := M[key]</code></p>
 </li>
 <li><p>删除键值对<code>delete(M, key)</code></p>
@@ -567,7 +569,28 @@
 </blockquote>
 <p><strong>高阶函数</strong>：参数或返回值是函数的函数</p>
 <p><strong>闭包</strong>（匿名函数）：引用外部数据的函数</p>
-<h1 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h1 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h1><h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2>
+<h1 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h1 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h1><h2 id="资源管理和错误处理"><a href="#资源管理和错误处理" class="headerlink" title="资源管理和错误处理"></a>资源管理和错误处理</h2><h3 id="defer调用"><a href="#defer调用" class="headerlink" title="defer调用"></a>defer调用</h3><p>注意点</p>
+<ol>
+<li>调用在函数结束时执行</li>
+<li>参数立即求值</li>
+<li>defer栈</li>
+</ol>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">file, err := os.Open(<span class="hljs-string">&quot;file.txt&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-keyword">if</span> pathError, ok := err.(*os.PathError); ok &#123;<br>    fmt.Println(pathError)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  <span class="hljs-built_in">panic</span>(err)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="测试与性能调优"><a href="#测试与性能调优" class="headerlink" title="测试与性能调优"></a>测试与性能调优</h2><h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h3 id="依赖概念"><a href="#依赖概念" class="headerlink" title="依赖概念"></a>依赖概念</h3><p>使用的其他库</p>
+<h3 id="管理工具"><a href="#管理工具" class="headerlink" title="管理工具"></a>管理工具</h3><h4 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h4><blockquote>
+<p>默认为<code>~/go</code>（unix, linux)，<code>%USERPROFILE%\go</code>（windows）</p>
+</blockquote>
+<p>管理方式：将项目和依赖都放在<code>GOPATH</code></p>
+<h4 id="GOVENDOR"><a href="#GOVENDOR" class="headerlink" title="GOVENDOR"></a>GOVENDOR</h4><p>管理方式：每个项目添加<code>vendor/</code>，存放第三方库</p>
+<h4 id="go-mod"><a href="#go-mod" class="headerlink" title="go mod"></a>go mod</h4><p>管理方式：<code>go</code>命令统一管理，无须关心目录结构</p>
+<p>操作：</p>
+<ol>
+<li>初始化：<code>go mod init</code></li>
+<li>增加依赖：<code>go get</code></li>
+<li>更新依赖：<code>go get [@v...]</code>, <code>go mod tidy</code></li>
+<li>项目迁移：<code>go mod init</code>, <code>go build ./...</code></li>
+</ol>
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2>
             </div>
             <hr>
             <div>
