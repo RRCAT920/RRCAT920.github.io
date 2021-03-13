@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      3.2k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      34
+      40
        分钟
     </span>
   
@@ -536,6 +536,7 @@
 <h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>带<strong>接受者</strong>的函数</p>
 <h5 id="声明-1"><a href="#声明-1" class="headerlink" title="声明"></a>声明</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Math)</span> <span class="hljs-title">Add</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123;<br>  <span class="hljs-keyword">return</span> m.X + m.Y<br>&#125;<br></code></pre></td></tr></table></figure>
 <h5 id="注意点-7"><a href="#注意点-7" class="headerlink" title="注意点"></a>注意点</h5><ol>
+<li><strong>nil也可以调用方法</strong></li>
 <li>类型和方法的定义必须在同一包内</li>
 <li>接受者类型不能是内建类型</li>
 </ol>
@@ -569,14 +570,54 @@
 </blockquote>
 <p><strong>高阶函数</strong>：参数或返回值是函数的函数</p>
 <p><strong>闭包</strong>（匿名函数）：引用外部数据的函数</p>
-<h1 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h1 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h1><h2 id="资源管理和错误处理"><a href="#资源管理和错误处理" class="headerlink" title="资源管理和错误处理"></a>资源管理和错误处理</h2><h3 id="defer调用"><a href="#defer调用" class="headerlink" title="defer调用"></a>defer调用</h3><p>注意点</p>
+<h1 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h1><h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><p><strong>协程：轻量级”线程</strong>“</p>
+<ol>
+<li><p><strong>非抢占式</strong>多任务处理，由协程主动交出控制权</p>
+</li>
+<li><p>编译器/解释器/虚拟机层面的多任务</p>
+</li>
+<li><p>多个协程可在一个或多个线程上运行</p>
+<p> <img src="/img/golang/goroutine_thread.png" srcset="/img/loading.gif" alt="goroutine和线程的关系"></p>
+</li>
+</ol>
+<p><strong>goroutine特点</strong>：</p>
+<ol>
+<li><p>go加上函数调用就可以送给调度器运行，无须在定义时区分是否为异步函数</p>
+</li>
+<li><p>调度器在合适的点切换</p>
+<blockquote>
+<p>切换点参考，不保证切换，不保证其他点不切换</p>
+<p>I/O, select</p>
+<p>channel</p>
+<p>等待锁</p>
+<p>函数调用（有时）</p>
+<p>runtime.Gosched()</p>
+</blockquote>
+</li>
+<li><p>-race检测数据访问冲突</p>
+</li>
+</ol>
+<h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><p>协程间通信</p>
+<blockquote>
+<p>不要通过共享内存来通信；通过通信来共享内存</p>
+</blockquote>
+<p>Channel, Buffered Channel, range</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">c := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)<br>c &lt;- <span class="hljs-number">1</span><br>c &lt;- <span class="hljs-number">2</span><br>n := &lt;-c<br>fmt.Println(n)<br></code></pre></td></tr></table></figure>
+<h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><h3 id="sync-WaitGroup"><a href="#sync-WaitGroup" class="headerlink" title="sync.WaitGroup"></a>sync.WaitGroup</h3><p><img src="/img/golang/wg.png" srcset="/img/loading.gif" alt="sync.WaitGroup流程"></p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h1 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h1><h2 id="资源管理和错误处理"><a href="#资源管理和错误处理" class="headerlink" title="资源管理和错误处理"></a>资源管理和错误处理</h2><h3 id="defer调用"><a href="#defer调用" class="headerlink" title="defer调用"></a>defer调用</h3><p>注意点</p>
 <ol>
 <li>调用在函数结束时执行</li>
 <li>参数立即求值</li>
 <li>defer栈</li>
 </ol>
-<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">file, err := os.Open(<span class="hljs-string">&quot;file.txt&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-keyword">if</span> pathError, ok := err.(*os.PathError); ok &#123;<br>    fmt.Println(pathError)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  <span class="hljs-built_in">panic</span>(err)<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="测试与性能调优"><a href="#测试与性能调优" class="headerlink" title="测试与性能调优"></a>测试与性能调优</h2><h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h3 id="依赖概念"><a href="#依赖概念" class="headerlink" title="依赖概念"></a>依赖概念</h3><p>使用的其他库</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p><code>panic-defer-recover</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">file, err := os.Open(<span class="hljs-string">&quot;file.txt&quot;</span>)<br><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-keyword">if</span> pathError, ok := err.(*os.PathError); ok &#123;<br>    fmt.Println(pathError)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  <span class="hljs-built_in">panic</span>(err)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="测试与性能调优"><a href="#测试与性能调优" class="headerlink" title="测试与性能调优"></a>测试与性能调优</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// &lt;filename&gt;_test.go</span><br><br><span class="hljs-comment">// 功能测试</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestFunc</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>  tests := []<span class="hljs-keyword">struct</span>&#123;<br>    a, b, c <span class="hljs-keyword">int</span><br>  &#125; &#123;<br>    &#123;<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;,<br>    &#123;<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>&#125;,<br>    &#123;<span class="hljs-number">1000</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">2000</span>&#125;,<br>  &#125;<br>  <br>  <span class="hljs-keyword">for</span> _, test := <span class="hljs-keyword">range</span> tests &#123;<br>    <span class="hljs-keyword">if</span> actual := Func(test.a, test.b); actual != test.c &#123;<br>			<span class="hljs-comment">// ...</span><br>    &#125;<br>  &#125;<br>&#125;<br><span class="hljs-comment">// go test .  当前目录的功能测试</span><br><span class="hljs-comment">// go test . -coverprofile c.out  将测试代码覆盖率输出到c.out</span><br><span class="hljs-comment">// go tool cover -html c.out  将c.out转成html格式</span><br><br><span class="hljs-comment">// 性能测试</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">BenchmarkFunc</span><span class="hljs-params">(b *testing.B)</span></span> &#123;<br>  a, b, c := <span class="hljs-number">1000</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">2000</span><br>  <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; b.N; i++ &#123;<br>    <span class="hljs-keyword">if</span> actual := Func(a, b); actual != c &#123;<br>			<span class="hljs-comment">// ...</span><br>    &#125;<br>  &#125;<br>&#125;<br><span class="hljs-comment">// go test -bench . 当前目录的性能测试</span><br><span class="hljs-comment">// go test -bench . -cpuprofile cpu.out  将cpu占用率输出到cpu.out</span><br><span class="hljs-comment">// go tool pprof cpu.out</span><br><span class="hljs-comment">// (pprof) web  查看</span><br><br><br><br><span class="hljs-comment">// 文档及实例代码</span><br><span class="hljs-comment">// Example</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Example_Func</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-comment">// ...</span><br>&#125;<br><span class="hljs-comment">// godoc -http :6060  生成文档</span><br></code></pre></td></tr></table></figure>
+<img src="/img/golang/cover.png" srcset="/img/loading.gif" alt="代码覆盖率流程" style="zoom:50%;" />
+
+<img src="/img/golang/pprof.png" srcset="/img/loading.gif" alt="性能调优流程" style="zoom:50%;" />
+
+<h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h3 id="依赖概念"><a href="#依赖概念" class="headerlink" title="依赖概念"></a>依赖概念</h3><p>使用的其他库</p>
 <h3 id="管理工具"><a href="#管理工具" class="headerlink" title="管理工具"></a>管理工具</h3><h4 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h4><blockquote>
 <p>默认为<code>~/go</code>（unix, linux)，<code>%USERPROFILE%\go</code>（windows）</p>
 </blockquote>
