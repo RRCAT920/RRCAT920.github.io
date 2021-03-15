@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.2k 字
+      3.3k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      40
+      41
        分钟
     </span>
   
@@ -603,8 +603,25 @@
 </blockquote>
 <p>Channel, Buffered Channel, range</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">c := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)<br>c &lt;- <span class="hljs-number">1</span><br>c &lt;- <span class="hljs-number">2</span><br>n := &lt;-c<br>fmt.Println(n)<br></code></pre></td></tr></table></figure>
-<h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><h3 id="sync-WaitGroup"><a href="#sync-WaitGroup" class="headerlink" title="sync.WaitGroup"></a>sync.WaitGroup</h3><p><img src="/img/golang/wg.png" srcset="/img/loading.gif" alt="sync.WaitGroup流程"></p>
-<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h1 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h1><h2 id="资源管理和错误处理"><a href="#资源管理和错误处理" class="headerlink" title="资源管理和错误处理"></a>资源管理和错误处理</h2><h3 id="defer调用"><a href="#defer调用" class="headerlink" title="defer调用"></a>defer调用</h3><p>注意点</p>
+<h3 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h3><h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><p>Select的使用，定时器的使用、Select中使用nil channel</p>
+<p><img src="/img/golang/select.png" srcset="/img/loading.gif" alt="select多路复用器"></p>
+<h4 id="传统同步机制"><a href="#传统同步机制" class="headerlink" title="传统同步机制"></a>传统同步机制</h4><h5 id="WaitGroup"><a href="#WaitGroup" class="headerlink" title="WaitGroup"></a>WaitGroup</h5><p><img src="/img/golang/wg.png" srcset="/img/loading.gif" alt="sync.WaitGroup流程"></p>
+<h5 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h5><h5 id="Cond"><a href="#Cond" class="headerlink" title="Cond"></a>Cond</h5><h3 id="并发模式"><a href="#并发模式" class="headerlink" title="并发模式"></a>并发模式</h3><ol>
+<li>生成器</li>
+<li>服务/任务</li>
+<li>同时等待多个服务：两种方法<ol>
+<li>开多个goroutine</li>
+<li>select</li>
+</ol>
+</li>
+</ol>
+<h3 id="任务控制"><a href="#任务控制" class="headerlink" title="任务控制"></a>任务控制</h3><ol>
+<li>非阻塞等待任务</li>
+<li>任务超时机制</li>
+<li>任务中断/退出</li>
+<li>程序优雅退出</li>
+</ol>
+<h1 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h1><h2 id="资源管理和错误处理"><a href="#资源管理和错误处理" class="headerlink" title="资源管理和错误处理"></a>资源管理和错误处理</h2><h3 id="defer调用"><a href="#defer调用" class="headerlink" title="defer调用"></a>defer调用</h3><p>注意点</p>
 <ol>
 <li>调用在函数结束时执行</li>
 <li>参数立即求值</li>
@@ -631,7 +648,8 @@
 <li>更新依赖：<code>go get [@v...]</code>, <code>go mod tidy</code></li>
 <li>项目迁移：<code>go mod init</code>, <code>go build ./...</code></li>
 </ol>
-<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2>
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p><code>context</code></p>
+
             </div>
             <hr>
             <div>
